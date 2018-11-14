@@ -1,0 +1,9 @@
+from scipy.optimize import minimize
+a1= st.norm(10,2).rvs(1000)
+params_ini = [1,2]
+
+Hay que restringir el estimador $\beta$ a valores positivos; sí el método de optimización arroja $\beta \leq 0$ en el proceso de optimización, la función regresa infinito para cambiar la dirección de búsqueda del optimizador.
+
+#restricción sigma positiva
+func = lambda est,xi,: -(-np.log(est[1])-1/2/(est[1]**2)*(xi-est[0])**2).sum() if est[1] >0 else float('Inf')
+print('Estimadores ',minimize(func,params_ini,args=(a1),tol=.0000001).x)
